@@ -1,0 +1,74 @@
+\newif\iflncs\lncsfalse
+\newif\iffull\fulltrue
+
+\documentclass[letterpaper,10pt]{article}
+%\usepackage{times}
+\usepackage{fullpage}
+\usepackage{perpage}
+\MakePerPage{footnote}
+\usepackage{hyperref,microtype}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage[amsmath,amsthm,thmmarks,hyperref]{ntheorem}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+%\setcounter{secnumdepth}{4}
+% remove "draft" to turn off fixme notes
+\usepackage[multiuser,inline,nomargin,marginclue]{fixme}
+\usepackage{framed} 
+\usepackage{tikz}
+\usepackage{wrapfig}
+
+
+
+\hypersetup
+{
+	colorlinks = true,
+	citecolor = [rgb]{0.1,0.13,0.53},
+	linkcolor = [rgb]{0.5,0.01,0.13}
+}
+
+\input{head/head}
+
+\newcommand{\smallmat}[1]{\parens*{\begin{smallmatrix} #1 \end{smallmatrix}}}
+
+%%%%
+
+\title{\Large{\textbf{Hyperledger Besu CIP}}}
+
+\author{%
+  Hart Montgomery \footnote{The Hyperledger Foundation.}
+}
+
+\begin{document}
+\date{}
+\maketitle 
+
+%\begin{abstract}
+%  \input{abstract}
+%\end{abstract}
+
+%\newpage
+%\tableofcontents
+%\newpage
+
+
+\input{intro}
+
+%\newpage
+%\appendix
+	
+
+
+\bibliographystyle{alpha}
+\bibliography{abbrev3,crypto,cryptoalt,other}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

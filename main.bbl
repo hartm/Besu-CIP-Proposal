@@ -1,0 +1,77 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{KRDO17}
+
+\bibitem[BG17]{buterin2017casper}
+Vitalik Buterin and Virgil Griffith.
+\newblock Casper the friendly finality gadget.
+\newblock {\em arXiv preprint arXiv:1710.09437}, 2017.
+
+\bibitem[BLS01]{AC:BonLynSha01}
+Dan Boneh, Ben Lynn, and Hovav Shacham.
+\newblock Short signatures from the {Weil} pairing.
+\newblock In Colin Boyd, editor, {\em ASIACRYPT~2001}, volume 2248 of {\em
+  {LNCS}}, pages 514--532. Springer, Heidelberg, December 2001.
+
+\bibitem[BLS02]{barreto2002constructing}
+Paulo~SLM Barreto, Ben Lynn, and Michael Scott.
+\newblock Constructing elliptic curves with prescribed embedding degrees.
+\newblock In {\em International conference on security in communication
+  networks}, pages 257--267. Springer, 2002.
+
+\bibitem[Bow17]{BLS12-318}
+Sean Bowe.
+\newblock Bls12-381: New zk-snark elliptic curve construction, 2017.
+\newblock \url{https://electriccoin.co/blog/new-snark-curve/}.
+
+\bibitem[Con22]{Teku}
+Consensys.
+\newblock Teku: The ethereum 2.0 client for institutional staking, 2022.
+\newblock \url{https://consensys.net/knowledge-base/ethereum-2/teku/}.
+
+\bibitem[DPS19]{FC:DaiPasShi19}
+Phil Daian, Rafael Pass, and Elaine Shi.
+\newblock Snow white: Robustly reconfigurable consensus and applications to
+  provably secure proof of stake.
+\newblock In {\em FC 2019}, {LNCS}, pages 23--41. Springer, Heidelberg, 2019.
+
+\bibitem[Eth22a]{EthBella}
+Ethereum.
+\newblock Bellatrix: The beacon chain, 2022.
+\newblock
+  \url{https://github.com/ethereum/consensus-specs/blob/dev/specs/bellatrix/beacon-chain.md}.
+
+\bibitem[Eth22b]{EthVal}
+Ethereum.
+\newblock Ethereum consensus specification: Phase 0 -- honest validator, 2022.
+\newblock
+  \url{https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/validator.md}.
+
+\bibitem[Eth22c]{EthEng}
+Ethereum.
+\newblock Ethereum execution engine api, 2022.
+\newblock
+  \url{https://github.com/ethereum/execution-apis/blob/main/src/engine/specification.md}.
+
+\bibitem[Eth22d]{Eth1-2}
+Ethereum.
+\newblock The great renaming: what happened to eth2?, 2022.
+\newblock \url{https://blog.ethereum.org/2022/01/24/the-great-eth2-renaming/}.
+
+\bibitem[KRDO17]{C:KRDO17}
+Aggelos Kiayias, Alexander Russell, Bernardo David, and Roman Oliynykov.
+\newblock Ouroboros: A provably secure proof-of-stake blockchain protocol.
+\newblock In Jonathan Katz and Hovav Shacham, editors, {\em CRYPTO~2017,
+  Part~I}, volume 10401 of {\em {LNCS}}, pages 357--388. Springer, Heidelberg,
+  August 2017.
+
+\bibitem[Shi20]{ShiBook}
+Elaine Shi.
+\newblock Foundations of distributed consensus and blockchains, 2020.
+\newblock \url{https://www.distributedconsensus.net}.
+
+\bibitem[W{\etalchar{+}}14]{wood2014ethereum}
+Gavin Wood et~al.
+\newblock Ethereum: A secure decentralised generalised transaction ledger.
+\newblock {\em Ethereum project yellow paper}, 151(2014):1--32, 2014.
+
+\end{thebibliography}

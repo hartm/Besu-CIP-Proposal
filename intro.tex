@@ -1,0 +1,43 @@
+%!TEX root = ./main.tex
+
+\section{Introduction} \label{sec:introduction}
+
+In this document, we present the Besu CIP proposal in our own words.  We first outline some core background material that is essential for understanding the proposal.  Then we delinineate the terms of the proposal.
+
+\section{Background}
+We start by discussing some background material.
+
+\subsection{Terminology}
+We begin by providing some informal definitions of terms from the Ethereum ecosystem that will be used in this document.  We emphasize that some of these terms have been redefined by the community over the lifespan of Ethereum, so we encourage readers who are unfamiliar with the current state of Ethereum to take note.
+
+\paragraph{Eth1 vs Eth2.}  Eth1 defines the ``execution layer'' of Ethereum, while Eth2 defines the ``consensus layer.''  This was recently formalized in a blog post from the Ethereum Foundation~\cite{Eth1-2}.  Note that this differs from previous notation.  As an example, Hyperleger Besu will live (mostly) at the Eth1 layer since its primary focus is as an Ethereum execution client.  On the other hand, Consensys's Teku~\cite{Teku} lives at the Eth2 layer.
+
+\subsection{Proof of Stake Consenus}
+A \emph{consensus protocol} is a necessary feature of every blockchain because it protects the blockchain against potentially malicious adversaries.  The Ethereum Bellatrix upgrade~\cite{EthBella} changes the core consensus algorithm of Ethereum from proof of work to proof of stake.  It would take an entire textbook to explain proof of stake consensus (we recommend~\cite{ShiBook} as a general reference on modern consensus algorithms), so we do not attempt that here.  We emphasize, though, that this proposal is written in a way that requires some understanding of proof of stake consensus in order to understand the rationale behind some of the design decisions.  The goal of this proposal is to incentivize the development of an Ethereum mainnet client (Besu) and ensure that some validators run Besu on the Ethereum mainnet.
+
+Informally speaking, proof of stake consensus involves participants on the network ``voting'' on transactions.  Each participant's vote is weighted by the amount of stake they hold.  If a participant misbehaves, they may lose their stake in a process called \emph{slashing}.  There is a huge amount of literature on proof of stake consensus~\cite{buterin2017casper,C:KRDO17,FC:DaiPasShi19} and we encourage interested readers to peruse this literature for detailed explanations.  We note that the Ethereum proof of stake specification is defined in a github repository~\cite{EthVal}.
+
+\subsection{Keys}
+In cryptocurrencies, ownership is typically represented by the ownership of signing keys.  Ethereum is no exception.  In our case, there are three primary sets of keys with which we need to deal.
+
+\paragraph{Withdrawal Keys.}  The \emph{withdrawal keys}, referred to in the specification as \emph{withdrawal\_credentials}, control the ability to withraw staked Ethereum, as well as receive validation rewards.  These are best described in the aforementioned specification~\cite{EthVal}.
+
+Currently there are two forms of withdrawal credentials supported:
+\begin{itemize}
+\item BLS signature~\cite{AC:BonLynSha01} key pairs over the curve BLS12-318~\cite{barreto2002constructing,BLS12-318}.  Note that even though they have the same acronym, BLS signatures are a cryptographic signature scheme (supporting aggregate signatures), and BLS curves are pairing-friendly elliptic curves on which BLS signatures can be built.  We will avoid acronym confusion to the best of our ability.
+\item Eth1 addresses (in the form of 20-byte strings) denoted by \emph{eth1\_withdrawal\_address}.  As stated in~\cite{EthVal}, after the merge of the current Ethereum application layer into the Beacon Chain, withdrawals to \emph{eth1\_withdrawal\_address} will simply be increases to the account's Eth balance that do not trigger any EVM execution.
+\end{itemize}
+
+We note that withdrawal credentials can be ``cold'':  that is, they are not needed for frequent validator operations and only need to be used when moving staked Eth or staking rewards.
+
+\textcolor{red}{TIM:  What is the EF using here for the CIP Nodes?  I'm guessing BLS but I can't find it.}
+
+\paragraph{Validator Keys.}  The \emph{validator keys}~\cite{EthVal} are keys for the BLS signature scheme~\cite{AC:BonLynSha01} implemented with the BLS12-381 curve~\cite{BLS12-318}.  The validator keys are used to actively sign data throughout the operation of the validator and must be ``hot.'' These are the traditional signature keys that one associates with blockchain activity.
+
+We emphasize that the signing key of the validator key set must be kept secure, as it cannot be changed during the operation of the vaildator (although the stake can be withdrawn and used to create a new validator).
+
+\textcolor{red}{TIM:  I'm assuming that these validator keys are sampled independently from the withdrawal credentials and cannot be updated because I couldn't find text to support this.  Can you confirm this?  I want to make sure that I'm not missing a delegation or update mechanism, which would be awesome to have.}
+
+\paragraph{Transaction Fee Recipient Keys.}    When the validators construct blocks, they can send the transactions fees from the block (including gas fees) to a recipient that is not necessarily themselves.  The \emph{feeRecipient} is a $20$-byte string that designates an Eth1 address and is a part of the \emph{ExecutionPayload} of the Beacon Chain specification.  The value of this \emph{feeRecipient} is thus a \emph{transaction fee recipient key}.  
+
+The execution payload structure is defined in the execution engine specification~\cite{EthEng} as well as the Bellatrix update description~\cite{EthBella} which is the update implementing ``the merge.''  We note that the \emph{feeRecipient} is equivalent to the \emph{beneficiary} from the original Ethereum yellow paper~\cite{wood2014ethereum}.
