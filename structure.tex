@@ -1,0 +1,49 @@
+%!TEX root = ./main.tex
+
+\section{Program Structure} \label{sec:structure}
+In this section, we define the structure of the main progrmam.  We emphasize that the program aims to provide long-term support and incentives for teams towards maintaining reliable clients and a healthy network overall.
+
+For client teams to be eligible, they should already be contributing to the general development of Ethereum and intend to support the upcoming transition to proof of stake. Throughout the program, teams will need to maintain certain levels of performance to be eligible for the rewards.  We explain which maintainers and organizations are eligible for which rewards later in this document.
+
+The Hyperledger Besu client, unlike other Ethereum clients, is maintained by several organizations and is part of the Hyperledger Foundation. This document, and the values referenced, represent the entirety of the incentive program for all teams maintaining Hyperledger Besu. Once again, we emphasize that the EF reserves full discretion about how funds from the program are distributed across the various teams contributing to Hyperledger Besu.
+
+The overall process of the program can be summarized as follows:
+\begin{itemize}
+\item The EF makes deposits into accounts controlled by withdrawal keys.
+\item The EF transfers control of the validator keys to the node operators.
+\item The node operators run the validators.
+\item The EF releases the withdrawal credentials to patron organizations and maintainers in waves.
+\end{itemize}
+
+We explain each of these steps in more detail below.  Note that none of these steps explicitly require HLF involvement; however, the success of the program (and the release of the withdrawal credentials) is dependent on the Besu client meeting various requirements which implicitly involves the HLF.
+
+\subsection{Parameter Definitions}
+We begin by defining some parameters that will be used in the following section.  We define them here so that they may be potentially changed in updated versions of this document easily.
+\[
+\begin{array}{|l|l|l|}
+\hline
+\textbf{Name} & \textbf{Value} & \textbf{Description} \\
+\hline
+NUM\_PERFORMANCE & 128 & \text{Number of validators monitored for performance} \\
+\hline
+NUM\_CANARIES & 16 & \text{Number of canary vaildators} \\
+\hline
+NUM\_VALIDATORS & NUM\_PERFORMANCE & \text{Total number of validators} \\
+&  + NUM\_CANARIES & \\
+\hline
+INITIAL\_RELEASE & 32 & \text{Number of validators to release} \\
+& &  \text{at initial major milestone} \\
+\hline
+TIMED\_RELEASES & 6, 10, 14, 15, 22, & \text{Number of validators to be released each} \\
+& 26 + NUM\_CANARIES & \text{grant period after } INITIAL\_RELEASE \\
+\hline
+METRICS\_WINDOW & 8192 & \text{Number of epochs over which} \\
+& & \text{success metrics are observed} \\
+\hline
+MAX\_PROBATION\_WINDOW & 32768 & \text{Maximum number of epochs that the} \\
+& & \text{client can be in probation before the EF} \\
+& & \text{can partially or fully remove the client} \\
+& & \text{from the incentivization.} \\
+\hline
+\end{array}
+\]
