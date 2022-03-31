@@ -75,5 +75,9 @@ At this point, the node operator is in charge of the management of the associate
 
 Performance of the Client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
+Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to the splitter contract defined in section~\ref{sec:splitter}. In other words, the node operator will designate the $feeRecipient$ in the $ExecutionaPayload$ to be the splitter contract.
 
-Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to a splitter contract. designate the $feeRecipient$ in the $ExecutionaPayload$. 
+\subsection{Step 4:  Withdrawal Credentials Released}
+Eventually the EF will release withdrawal credentials to patron organizations (and potentially maintainers) as it sees fit.  When a wave of validators is released, this ends the obligation of both the node operator and the withdrawal credential receipient to the EF for those validators. The withdrawal credential receipients are free to choose to continue to validate, to exit, to withdraw, to spend the entire credential buying Hart beer, and so forth.
+
+Note that if recipients choose to continue to validate, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.

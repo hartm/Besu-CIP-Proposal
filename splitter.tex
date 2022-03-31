@@ -3,6 +3,8 @@
 \section{The Splitter Contract} \label{sec:splitter}
 A splitter contract will be used for distributing some of the rewards from the program.  More precisely, the splitter contract will divide the non-withdrawal key rewards (transaction fees and validator rewards) between mainnet maintainers, node operators, and the HLF.  The EF is responsible for creating and updating the splitter contract; this gives them full control over how to allocate the reward funds.
 
+\textcolor{red}{TIM:  The splitter contract (and fee allocation) didn't make it into your most recent document.  I'm assuming that you wanted to add it later since otherwise there is no explicit payment for node operation (although Consensys would still obviously be getting paid through withdrawal credentials).  If you meant to leave this out, please let me know and we can take this part out.}
+
 The initial splitter contract distribution will be as follows:
 
 \paragraph{$20\%$ : \textbf{Node Operator}.}  The node operator may spend these fees/rewards at their sole discretion and without limitation. No other compensation will be provided for the node operation service.

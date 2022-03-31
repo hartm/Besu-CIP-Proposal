@@ -1,0 +1,16 @@
+%!TEX root = ./main.tex
+
+\section{Program Metrics} \label{sec:metrics}
+In this section we discuss the milestones and success metrics of the program.
+
+\subsection{Program Milestones}
+Due to the dynamic nature of the ever evolving Ethereum roadmap, simplicity is favored in the choice of milestones.  The milestones will determine the grant periods, which again are at the sole discretion of the EF.
+
+A wave of credentials are released when withdrawals from the beacon chain are enabled, with a minimum period of one year between the launch of the Besu CIP and the complete release of the first wave of credentials (in other words, the first grant period will be a year).
+
+If withdrawals from the beacon chain are enabled within or before the first year of the Besu CIP, the first wave of credentials will be released monthly, in equal tranches, from the first month after withdrawals are enabled, to the one year mark of the program. For example, if withdrawals are enabled 6 months after the start of the program, then 1/6th of the first tranche will be released on months 6, 7, 8, 9, 10, 11 and 12. Otherwise, the first wave of credentials will be released when withdrawals are enabled. Subsequent waves are released over time if the Client Hyperledger Besu continues to meet expectations. Specifically, the milestones are as follows:
+
+\begin{itemize}
+\item Release $INITIAL\_RELEASE$ validators at the time at which withdrawals from the beacon chain are enabled ($WITHDRAWALS\_ENABLED\_TIME$).
+\item $\text{for} i, NUM\_VALIDATORS \in enumerate \left(TIMED\_RELEASES \right)$, release $NUM\_VALIDATORS$ validators at time $WITHDRAWALS\_ENABLED\_TIME + (i + 1) * 6_{\text{months}}$ if client operation Hyperledger Besu continues to exhibit successful metrics.
+\end{itemize}
