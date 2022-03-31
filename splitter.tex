@@ -1,0 +1,36 @@
+%!TEX root = ./main.tex
+
+\section{The Splitter Contract} \label{sec:splitter}
+A splitter contract will be used for distributing some of the rewards from the program.  More precisely, the splitter contract will divide the non-withdrawal key rewards (transaction fees and validator rewards) between mainnet maintainers, node operators, and the HLF.  The EF is responsible for creating and updating the splitter contract; this gives them full control over how to allocate the reward funds.
+
+The initial splitter contract distribution will be as follows:
+
+\paragraph{$20\%$ : \textbf{Node Operator}.}  The node operator may spend these fees/rewards at their sole discretion and without limitation. No other compensation will be provided for the node operation service.
+
+The node operator will provide access to the nodes running canary validators to Hyperledger mainnet developers and all maintainers performing mainnet work for development and debugging purposes. Access to performance nodes may be restricted to node operators, at the node operator’s discretion. There is an expectation that if a contributor receives access nodes, they will then be added to the respective monitoring channels for those nodes.
+
+\paragraph{$20\%$:  \textbf{Hyperledger Foundation}.}  Another twenty percent goes to the Hyperledger Foundation.  The Hyperledger Foundation is required to spend any money received here on things that benefit Besu mainnet work.  The exact judgment of what constitutes something that benefits mainnet work will be left to the HLF.  As a check against this responsibility, at every grant period, the HLF will report back to the EF the expenditures of these fees.
+
+\medskip
+\noindent Some examples of items explicitly encouraged by the EF include (but are not limited to):
+\begin{itemize}
+\item Taxes associated with the reception of funds
+\item Services consumed by the Hyperledger Besu project, such as:
+\begin{itemize}
+\item Continuous Integration
+\item Cloud Hosting fees for development (i.e. testnet nodes)
+\item Source code hosting
+\item Any other such services directly related to development of mainnet capabilities in Hyperledger Besu
+\item Note: These costs are separate from any incurred by any other participating organization
+\end{itemize}
+\item Sending maintainers to speak at and promote Hyperledger Besu at Hyperledger events (such as the Global Forum and Members Summit) and Ethereum Foundation events (such as DevCon and research/development workshops)
+\item Posting Bounties for work on Hyperledger Besu mainnet or mainnet related work
+\item Spending that would directly promote interoperability with Besu Mainnet functionality
+\item Other spending that would directly promote and improve Hyperledger Besu’s mainnet activities
+\end{itemize}
+
+\paragraph{$60\%$:  \textbf{Mainnet Maintainers}.}  The remaining 60\% of the splitter contract funds are allocated to the current mainnet maintainers (i.e. those determined at the beginning of the current grant period).  Initially, if there are $N$ mainnet maintainers in a period, then $\frac{1}{N}$ of the total funds will be allocated towards each maintainer.  Funds of company maintainers will be allocated to their employer, and funds of individual maintainers will be directly allocated to the maintainers themselves.  Before the merge happens, the initial list of mainnet maintainers will be finalized.  
+
+The mainnet maintainers and their employers do not have any restrictions on how they can spend this money.
+
+\textcolor{red}{TIM:  I think this is consistent with your original proposal for this, but please double-check to make sure that you are OK with it.}

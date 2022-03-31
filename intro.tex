@@ -20,6 +20,8 @@ We begin by providing some informal definitions of terms from the Ethereum ecosy
 
 \paragraph{Epochs.}  Rather than count the length of the chain in blocks, after the Bellatrix update~\cite{EthBella}, the length of the Ethereum chain will be counted in \emph{epochs}.  An \emph{epoch} is a bundle of up to 32 blocks that validators propose and attest to over a period lasting roughly $6.4$ minutes.
 
+\paragraph{Splitter Contract.}  A splitter contract is a smart contract that takes as input some cryptocurrency (in this case, Ethereum), and splits it proportionally in a predefined formula to various entities (represented by their public keys).  An example of a splitter contract is mirror splits~\cite{Mirror} which has been suggested by the EF as a good splitter contract to deploy.
+
 \subsection{Proof of Stake Consenus}
 A \emph{consensus protocol} is a necessary feature of every blockchain because it protects the blockchain against potentially malicious adversaries.  The Ethereum Bellatrix upgrade~\cite{EthBella} changes the core consensus algorithm of Ethereum from proof of work to proof of stake.  It would take an entire textbook to explain proof of stake consensus (we recommend~\cite{ShiBook} as a general reference on modern consensus algorithms), so we do not attempt that here.  We emphasize, though, that this proposal is written in a way that requires some understanding of proof of stake consensus in order to understand the rationale behind some of the design decisions.  The goal of this proposal is to incentivize the development of an Ethereum mainnet client (Besu) and ensure that some validators run Besu on the Ethereum mainnet.
 
