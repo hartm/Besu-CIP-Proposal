@@ -69,9 +69,9 @@ The client node operator then generates $NUM\_VALIDATORS$ and verifies that the 
 
 
 \subsection{Step 3:  The Validators Run}
-At this point, the node operator is in charge of the management of the associated validators until withdrawal credential privkeys are released. Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.
+At this point, the node operator is in charge of the management of the associated validators until withdrawal credentials are released. Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.
 
-\textcolor{green}{GRACE:  I'm assuming you are going to use Teku here?  Can you confirm this?}
+\textcolor{green}{GRACE:  I'm assuming you are going to use Teku here at least some, but it looks like node operators are encouraged to use a variety of consensus layer protocols.  Can you tell us what the distribution of consensus protocols you are planning to use will be?}
 
 Performance of the Client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
@@ -79,5 +79,9 @@ Once the merge has occurred (and ``real'' transactions happen on the beacon chai
 
 \subsection{Step 4:  Withdrawal Credentials Released}
 Eventually the EF will release withdrawal credentials to patron organizations (and potentially maintainers) as it sees fit.  When a wave of validators is released, this ends the obligation of both the node operator and the withdrawal credential receipient to the EF for those validators. The withdrawal credential receipients are free to choose to continue to validate, to exit, to withdraw, to spend the entire credential buying Hart beer, and so forth.
+
+An exception is the HLF:  they must spend their withdrawal credentials on work that benefits Besu mainnet development as defined earlier.
+
+\textcolor{red}{TIM:  This wasn't in your most recent document, but it's the sentiment you've expressed throughout the process.  I'm assuming you want to restrict HLF spending to Besu mainnet work.}
 
 Note that if recipients choose to continue to validate, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.

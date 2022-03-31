@@ -3,6 +3,8 @@
 \section{Program Metrics} \label{sec:metrics}
 In this section we discuss the milestones and success metrics of the program.
 
+\textcolor{red}{TIM: This section often conflates the node operator and the software developer.  I guess in your other client programs they are the same.  They are obviously related here--Consensys is the node operator and by far and away the biggest contributor to Besu--but not exactly equivalent.  If we reach a case where the node operator was not the biggest contributor to Besu, then some of this text could be problematic, particularly the parts about who is at fault for various different things.  This may not be an issue at this point but is something to consider for the wording.}
+
 \subsection{Program Milestones}
 Due to the dynamic nature of the ever evolving Ethereum roadmap, simplicity is favored in the choice of milestones.  The milestones will determine the grant periods, which again are at the sole discretion of the EF.
 
@@ -12,5 +14,68 @@ If withdrawals from the beacon chain are enabled within or before the first year
 
 \begin{itemize}
 \item Release $INITIAL\_RELEASE$ validators at the time at which withdrawals from the beacon chain are enabled ($WITHDRAWALS\_ENABLED\_TIME$).
-\item $\text{for} i, NUM\_VALIDATORS \in enumerate \left(TIMED\_RELEASES \right)$, release $NUM\_VALIDATORS$ validators at time $WITHDRAWALS\_ENABLED\_TIME + (i + 1) * 6_{\text{months}}$ if client operation Hyperledger Besu continues to exhibit successful metrics.
+\item $\text{for } i, NUM\_VALIDATORS \in enumerate \left(TIMED\_RELEASES \right)$, release $NUM\_VALIDATORS$ validators at time $WITHDRAWALS\_ENABLED\_TIME + (i + 1) * 6_{\text{months}}$ if client operation Hyperledger Besu continues to exhibit successful metrics.
+\end{itemize}
+
+\subsection{Success Metrics}
+While the program exists entirely at the discretion of the EF, there are some explicit validator performance rquirements that, if not met, will automatically result in the termination of the program.
+
+We note that the first $NUM\_PERFORMANCE$ validators of the deposited validators are tracked by the EF to assess metrics.  The last $NUM\_CANARIES$ validators--the canary validators--are free to be used for testing, experimental relases, and so forth.  While canary validators are not expected to constantly meet the success metrics, they are still subject to the slashing rules.
+
+We next define some terms in a way that allows for modular changes:
+
+\[
+\begin{array}{|l|l|l|}
+\hline
+\textbf{Name} & \textbf{Value} & \textbf{Description} \\
+\hline
+MIN\_ACCEPTABLE\_BALANCE & 31.75 \text{ Eth} & \text{Minimum acceptable balance} \\
+& & \text{of client validators} \\
+\hline
+MIN\_ATTESTATION\_PERCENT & 95 & \text{Minimum acceptable percentage of} \\
+& & \text{attestations created by client validators} \\
+\hline
+MIN\_BLOCK\_PERCENT & 95 & \text{Minimum acceptable percentage of} \\
+& & \text{blocks created by client validators} \\
+\hline
+\end{array}
+\]
+
+Hyperledger Besu clients run by the node operators must meet the following metrics:
+\begin{itemize}
+\item Validators on average do not drop below $MIN\_ACCEPTABLE\_BALANCE$.
+\item \textcolor{red}{TIM:  What did you mean by ``on average'' here?}
+\item Validators have at least $MIN\_ATTESTATION\_PERCENTAGE$ percentage of expected attestations included on chain over any $METRICS\_WINDOW$ epoch period.
+\item Validators have at least $MIN\_BLOCK\_PERCENTAGE$ percentage of expected blocks included on chain over any $METRICS\_WINDOW$ epoch period.
+\end{itemize}
+
+Moreover, client teams are expected to actively participate in research and development of crucial network upgrades, including but not limited to implementation of a state management solution (e.g. state expiry). The EF is solely responsible for determining whether this metric has been met.
+
+Above all else, the EF expect client teams to actively work toward ensuring a robust and healthy network. The EF recognizes that in some scenarios these metrics are not entirely in the control of a single client (e.g. large portion of the network offline for an extended period of time due to issues with another client). In most such cases, the $METRICS\_WINDOW$ has been selected to be long enough to account for issues and recovery, but in such exceptional scenarios, the EF will also take into account exogenous factors outside of Hyperledger Besu’s control.
+
+In the context of this plan, validator top-ups (adding more Eth, up to 32 Eth, to a validator with less than 32 Eth) are against the rules and should generally be avoided. If in some scenario a top-up would benefit the health of the network, the EF and the Hyperledger Besu commnity can discuss and reformulate the metrics/milestones accordingly.
+
+\subsection{Probation}
+If the Hyperledger Besu nodes drop below the success metrics, the program's status moves into probation. During a probationary period, the Hyperledger Besu community and the node operators have $MAX\_PROBATION\_WINDOW$ epochs to get metrics back to successful standards, and during a probationary period no withdrawal credentials will be released. The amount of time spent in probation pushes back the release of any withdrawal credentials by at least that amount of time.
+
+\textcolor{red}{TIM:  The above paragraph mentioned validator credentials instead of withdrawal credentials.  I'm assuming you mean withdrawal credentials here?  The validator keys should have long been released to the node operators at this point.}
+
+If Client metrics remain in probationary status for more than $MAX\_PROBATION\_WINDOW$ epochs, the EF can at their discretion partially or fully remove Hyperledger Besu from the incentivization program and partially or fully exit the program’s validators.
+
+\subsection{Slashing}
+In the event that one or more of the designated Hyperledger Besu validators is slashed, such a validator is removed from the incentive program.
+
+If the event is relatively isolated and quickly remedied, the EF can at its sole discretion choose to place a maximum of 16 of the slashed ETH per slashed validator back into the program to be released at the final milestone.
+
+If the slashable event is exceedingly large, negligent, or repeated, the EF can at its discretion partially or fully remove Hyperledger Besu from the incentivization program and partially or fully exit the program’s validators.
+
+Note: Performance and canary validators are both subject to the slashing rules.
+
+\subsection{Consensus Layer Dependencies}
+While the Hyperledger Besu community is fully responsible for ensuring that their operation is run in a performant and non-slashable way, we recognize that there is a limit to what execution layer teams can do to mitigate issues on the consensus layer (and vice-versa). Specifically, this means we expect Hyperledger Besu and the node operator to adopt best practices with regards to running their validators, but will not penalize them in the case of a widespread consensus-layer issue. Best practices when running validators include:
+\begin{itemize}
+\item Ensuring that Hyperleger Besu can interoperate with most/all major consensus clients, at least on canary validators.
+\item Ensuring that Hyperleger Besu’s failures are decorrelated from the rest of the network, both by relying on diverse consensus layer clients and hosting setups.
+\item Ideally ensuring that Hyperleger Besu’s validators are split across >1 consensus client in case of a consensus client-specific issue.
+\item Ensuring that Hyperleger Besu has the ability to switch from one consensus client to another in the case of a consensus client-specific issue.
 \end{itemize}
