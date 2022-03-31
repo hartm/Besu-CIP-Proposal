@@ -47,3 +47,25 @@ MAX\_PROBATION\_WINDOW & 32768 & \text{Maximum number of epochs that the} \\
 \hline
 \end{array}
 \]
+
+\subsection{Step 1:  The EF Makes Deposits}
+After Hyperledger Besu has formally agreed to join the CIP, and a node operator, responsible for running and monitoring validators, has been selected by the EF, the EF creates $NUM\_VALIDATORS$ $32$-ETH deposits.  For exactly how this process occurs, please see~\cite{EthVal}.
+
+Note that the total ETH at stake in the client incentivization plan is equal to $NUM\_VALIDATORS * 32$. In consultation with the node operator, a formal start date for this program will be determined where teams will gain control of validators, sometime before ``The Merge'' occurs.
+
+\subsection{Step 2:  The EF Transfers Validator Keys}
+After step 1, there will be $NUM\_VALIDATORS$ sets of validator keys, each of which is a (signing key, public key) tuple. These keys must be securely transferred to the client team node operator.
+
+These keys are transfered to the Client via one of the following:
+\begin{itemize}
+\item Using asymmetric encryption (e.g. PGP) via a known/validated public key of the recipient client.
+\item Read verbally 25\% at a time over $4$ encrypted calls of various platforms.
+\item Through an alternatively negotiated, cryptographically secure means.
+\end{itemize}
+
+\textcolor{red}{TIM:  The original texts suggest there is a mnemonic that can be used to generate all of these keys.  I'd prefer to refer to this as a key delegation mechanism.  Can you explain the delegation mechanism that is used?  I am assuming you are probably generating a random seed, applying a PRG or a random oracle to expand it, and then feeding that randomness into the BLS key generation algorithm, but it might be useful to be more explicit here.  We should also probably mention this in step 1?}
+
+The client node operator then generates $NUM\_VALIDATORS$ and verifies that the key pairs are correct. The EF retains the keys in cold storage in the event that validator keys must be used to exit validators from the program.
+
+\subsection{Step 3:  The Validators Run}
+
