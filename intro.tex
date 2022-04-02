@@ -4,6 +4,17 @@
 
 In this document, we present the Besu CIP proposal in our own words.  We first outline some core background material that is essential for understanding the proposal.  Then we delinineate the terms of the proposal.
 
+To summarize, the Ethereum Foundation is launching an execution layer client incentive program (ELCIP) of which Hyperledger Besu is one execution client. This program will provide execution-layer client teams with locked Eth in the form of live validators to be released according to certain milestones, including post-merge performance and progress towards enabling withdrawals from the beacon chain.
+
+The Ethereum Foundation (EF) has designed the program with the following guiding principles in mind:
+
+\begin{itemize}
+\item The Ethereum Foundation reserves the right to change, update or terminate the program at any point. The EF thus acts as a check and balance that Besu maintainers, their parent organizations, and the Hyperledger Foundation (HLF) continue to meet the requirements of the program.
+\item In summary, the program offers teams locked Eth in the form of live validators to be released according to certain milestones. Alongside the “principal” (i.e. locked Eth) portion of the program, teams’ validators will also accrue staking rewards and transaction fees.
+\item While fees and rewards should be shared across the entire set of Besu maintainers working on mainnet, access to the locked Eth is reserved for organizations who demonstrate longstanding support for Besu’s mainnet work and the Ethereum network generally.
+\end{itemize}
+We explain the details behind these principles throughout the course of this document.
+
 \section{Background}~\label{sec:background}
 We start by discussing some background material.  We note that this should be familiar to Ethereum experts, but those who are not familiar with Ethereum's change to proof of stake may want to consult the following material for reference.
 
@@ -12,7 +23,7 @@ We begin by providing some informal definitions of terms from the Ethereum ecosy
 
 \paragraph{Eth1 vs Eth2.}  Eth1 defines the ``execution layer'' of Ethereum, while Eth2 defines the ``consensus layer.''  This was recently formalized in a blog post from the Ethereum Foundation~\cite{Eth1-2}.  Note that this differs from previous notation.  As an example, Hyperleger Besu will live (mostly) at the Eth1 layer since its primary focus is as an Ethereum execution client.  On the other hand, Consensys's Teku~\cite{Teku} lives at the Eth2 layer.
 
-\paragraph{Grant Period.}  The \emph{grant period} is the interval of time which passes between phases of the program.  At the beginning/end of each grant period, the HLF will report back to the EF as described later, and categorizations of maintainers and organizations will be reassesed.  Initially this period will be set for six months, but the EF can determine this as they see fit, reserving the option to have totally arbitrary grant periods that change on the fly.  We note that the grant period has been referred to as the \emph{CIP vesting period} in previous documentation.
+\paragraph{Grant Period.}  The \emph{grant period} is the interval of time which passes between phases of the program.  At the beginning/end of each grant period, the HLF will report back to the EF as described later, and categorizations of maintainers and organizations will be reassesed.  After the starting period, initially this period will be set for six months, but the EF can determine this as they see fit, reserving the option to have totally arbitrary grant periods that change on the fly.  We note that the grant period has been referred to as the \emph{CIP vesting period} in previous documentation.  There are more precise details on the grant period later in this document.
 
 \textcolor{red}{TIM:  does this look OK?  This should be in line with our conversation.}
 
@@ -26,6 +37,8 @@ We begin by providing some informal definitions of terms from the Ethereum ecosy
 A \emph{consensus protocol} is a necessary feature of every blockchain because it protects the blockchain against potentially malicious adversaries.  The Ethereum Bellatrix upgrade~\cite{EthBella} changes the core consensus algorithm of Ethereum from proof of work to proof of stake.  It would take an entire textbook to explain proof of stake consensus (we recommend~\cite{ShiBook} as a general reference on modern consensus algorithms), so we do not attempt that here.  We emphasize, though, that this proposal is written in a way that requires some understanding of proof of stake consensus in order to understand the rationale behind some of the design decisions.  The goal of this proposal is to incentivize the development of an Ethereum mainnet client (Besu) and ensure that some validators run Besu on the Ethereum mainnet.
 
 Informally speaking, proof of stake consensus involves participants on the network ``voting'' on transactions.  Each participant's vote is weighted by the amount of stake they hold.  If a participant misbehaves, they may lose their stake in a process called \emph{slashing}.  There is a huge amount of literature on proof of stake consensus~\cite{buterin2017casper,C:KRDO17,FC:DaiPasShi19} and we encourage interested readers to peruse this literature for detailed explanations.  We note that the Ethereum proof of stake specification is defined in a github repository~\cite{EthVal}.
+
+\textcolor{red}{Tim:  I'm happy to update this if you have better references/specs.}
 
 \subsection{Keys}
 In cryptocurrencies, ownership is typically represented by the ownership of signing keys.  Ethereum is no exception.  In our case, there are three primary sets of keys with which we need to deal.
@@ -46,7 +59,7 @@ We note that withdrawal credentials can be ``cold'':  that is, they are not need
 
 We emphasize that the signing key of the validator key set must be kept secure, as it cannot be changed during the operation of the vaildator (although the stake can be withdrawn and used to create a new validator).
 
-\textcolor{red}{TIM:  I'm assuming that these validator keys are sampled independently from the withdrawal credentials and cannot be updated because I couldn't find text to support this.  Can you confirm this?  I want to make sure that I'm not missing a delegation or update mechanism, which would be awesome to have.}
+\textcolor{red}{TIM:  I'm assuming that these validator keys are sampled independently from the withdrawal credentials and cannot be updated because I couldn't find text to support this.  Can you confirm this?  I want to make sure that I'm not missing a delegation or update mechanism, which would be awesome to have.  Later in your document, you define a ``mnemonic'' for key generation which seems to imply a key delegation mechanism.  Can you define this?}
 
 \paragraph{Transaction Fee Recipient Keys.}    When the validators construct blocks, they can send the transactions fees from the block (including gas fees) to a recipient that is not necessarily themselves.  The \emph{feeRecipient} is a $20$-byte string that designates an Eth1 address and is a part of the \emph{ExecutionPayload} of the Beacon Chain specification.  The value of this \emph{feeRecipient} is thus a \emph{transaction fee recipient key}.  
 
