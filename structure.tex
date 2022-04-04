@@ -69,11 +69,9 @@ The client node operator then generates $NUM\_VALIDATORS$ and verifies that the 
 
 
 \subsection{Step 3:  The Validators Run}
-At this point, the node operator is in charge of the management of the associated validators until withdrawal credentials are released. Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.
+At this point, the node operator is in charge of the management of the associated validators until withdrawal credentials are released. Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.  The cliend node operator has the discretion to run, add or change which consensus layer it uses with Hyperledger Besu. The node operator will determine when and how to onboard the right consensus layer. The team will begin running with Teku, but will evaluate additional consensus layers on an as needed basis.
 
-\textcolor{green}{GRACE:  I'm assuming you are going to use Teku here at least some, but it looks like node operators are encouraged to use a variety of consensus layer protocols.  Can you tell us what the distribution of consensus protocols you are planning to use will be?}
-
-Performance of the Client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
+Performance of the client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
 Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to the splitter contract defined in section~\ref{sec:splitter}. In other words, the node operator will designate the $feeRecipient$ in the $ExecutionaPayload$ to be the splitter contract.
 
@@ -84,6 +82,4 @@ An exception is the HLF:  they must spend their withdrawal credentials on work t
 
 \textcolor{red}{TIM:  This wasn't in your most recent document, but it's the sentiment you've expressed throughout the process.  I'm assuming you want to restrict HLF spending to Besu mainnet work.}
 
-Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.
-
-\textcolor{green}{GRACE:  We should probably have a HLF-Consensys discusison on what we are going to do with any withdrawal credentials released to the HLF.}
+Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and Consensys), we leave it up to these entities to determine smooth processes for withdrawing credentials.
