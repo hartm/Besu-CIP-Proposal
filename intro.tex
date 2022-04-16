@@ -51,9 +51,7 @@ Currently there are two forms of withdrawal credentials supported:
 \item Eth1 addresses (in the form of 20-byte strings) denoted by \emph{eth1\_withdrawal\_address}.  As stated in~\cite{EthVal}, after the merge of the current Ethereum application layer into the Beacon Chain, withdrawals to \emph{eth1\_withdrawal\_address} will simply be increases to the account's Eth balance that do not trigger any EVM execution.
 \end{itemize}
 
-We note that withdrawal credentials can be ``cold'':  that is, they are not needed for frequent validator operations and only need to be used when moving staked Eth or staking rewards.
-
-\textcolor{red}{TIM:  What is the EF using here for the CIP Nodes?  I'm guessing BLS but I can't find it.}
+We note that withdrawal credentials can be ``cold'':  that is, they are not needed for frequent validator operations and only need to be used when moving staked Eth or staking rewards.  The program will start by using BLS credentials for withdrawal keys (denoted $0x00$ credentials by the EF). We can update these to $0x01$ credentials (i.e. Eth1 addresses), and may have to in order to enable partial withdrawals. That said, recipients of withdrawal keys will need to secure a 0x01 credential no matter what because even if you make a withdrawal with a BLS credential, you need to specify which address to withdraw to and those must be Eth1 addresses. In both cases, recipients will need the ability to use the keys in cold storage, as the $0x00$ credential would be required to sign a withdrawal message, and the Eth1 private key is obviously required to move funds once withdrawn. 
 
 \paragraph{Validator Keys.}  The \emph{validator keys}~\cite{EthVal} are keys for the BLS signature scheme~\cite{AC:BonLynSha01} implemented with the BLS12-381 curve~\cite{BLS12-318}.  The validator keys are used to actively sign data throughout the operation of the validator and must be ``hot.'' These are the traditional signature keys that one associates with blockchain activity.
 
