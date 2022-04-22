@@ -1,9 +1,7 @@
 %!TEX root = ./main.tex
 
 \section{The Splitter Contract} \label{sec:splitter}
-A splitter contract will be used for distributing some of the rewards from the program.  More precisely, the splitter contract will divide the non-withdrawal key rewards (transaction fees and validator rewards) between mainnet maintainers, node operators, and the HLF.  The EF is responsible for creating and updating the splitter contract; this gives them full control over how to allocate the reward funds.
-
-\textcolor{red}{TIM:  The splitter contract (and fee allocation) didn't make it into your most recent document.  I'm assuming that you wanted to add it later since otherwise there is no explicit payment for node operation (although Consensys would still obviously be getting paid through withdrawal credentials).  If you meant to leave this out, please let me know and we can take this part out.}
+A splitter contract will be used for distributing some of the rewards from the program.  More precisely, the splitter contract will divide the non-withdrawal key rewards (transaction fees and validator rewards) between mainnet maintainers, node operators, and the HLF.  The EF is responsible for creating and updating the splitter contract; this gives them full control over how to allocate the reward funds.  We emphasize that they can change this allocation at a later date to whatever they desire.
 
 The initial splitter contract distribution will be as follows:
 
@@ -34,5 +32,3 @@ The node operator will provide access to the nodes running canary validators to 
 \paragraph{$60\%$:  \textbf{Mainnet Maintainers}.}  The remaining 60\% of the splitter contract funds are allocated to the current mainnet maintainers (i.e. those determined at the beginning of the current grant period).  Initially, if there are $N$ mainnet maintainers in a period, then $\frac{1}{N}$ of the total funds will be allocated towards each maintainer.  Funds of company maintainers will be allocated to their employer, and funds of individual maintainers will be directly allocated to the maintainers themselves.  Before the merge happens, the initial list of mainnet maintainers will be finalized.  
 
 The mainnet maintainers and their employers do not have any restrictions on how they can spend this money.
-
-\textcolor{red}{TIM:  I think this is consistent with your original proposal for this, but please double-check to make sure that you are OK with it.}

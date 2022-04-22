@@ -1,7 +1,7 @@
 %!TEX root = ./main.tex
 
 \section{Program Structure} \label{sec:structure}
-In this section, we define the structure of the main progrmam.  We emphasize that the program aims to provide long-term support and incentives for teams towards maintaining reliable clients and a healthy network overall.
+In this section, we define the structure of the main progrmam.  We emphasize that the program aims to provide long-term support and incentives for teams towards maintaining reliable clients and a healthy network overall.  We note that the description here mirrors the text of~\cite{OfficialNotes}.  Furthermore, the text in~\cite{OfficialNotes} should be regarded as the official text with respect to what is mentioned in this section until it is deprecated.
 
 For client teams to be eligible, they should already be contributing to the general development of Ethereum and intend to support the upcoming transition to proof of stake. Throughout the program, teams will need to maintain certain levels of performance to be eligible for the rewards.  We explain which maintainers and organizations are eligible for which rewards later in this document.
 
@@ -51,35 +51,39 @@ MAX\_PROBATION\_WINDOW & 32768 & \text{Maximum number of epochs that the} \\
 \subsection{Step 1:  The EF Makes Deposits}
 After Hyperledger Besu has formally agreed to join the CIP, and a node operator, responsible for running and monitoring validators, has been selected by the EF, the EF creates $NUM\_VALIDATORS$ $32$-ETH deposits.  For exactly how this process occurs, please see~\cite{EthVal}.  We note that Consensys has already been selected as the initial node operator.
 
-Note that the total ETH at stake in the client incentivization plan is equal to $NUM\_VALIDATORS * 32$. In consultation with the node operator, a formal start date for this program will be determined where teams will gain control of validators, sometime before ``The Merge'' occurs.
+Note that the total ETH at stake in the client incentivization plan is equal to $NUM\_VALIDATORS * 32$. In consultation with the node operator, a formal start date for this program will be determined where teams will gain control of validators, sometime before ``The Merge'' occurs (and after March 1, 2022, which has already passed by the time of this writing).
 
 \subsection{Step 2:  The EF Transfers Validator Keys}
-After step 1, there will be $NUM\_VALIDATORS$ sets of validator keys, each of which is a (signing key, public key) tuple. These keys must be securely transferred to the client team node operator.
+After step 1, there will be $NUM\_VALIDATORS$ sets of validator keys, each of which is a (signing key, public key) tuple controlled by a single seed\footnote{The EF refers to this seed as a ``mnemonic.''}. These keys must be securely transferred to the client team node operator.
 
-These keys are transfered to the Client via one of the following:
+This seed is transfered to the client via one of the following:
 \begin{itemize}
 \item Using asymmetric encryption (e.g. PGP) via a known/validated public key of the recipient client.
 \item Read verbally 25\% at a time over $4$ encrypted calls of various platforms.
 \item Through an alternatively negotiated, cryptographically secure means.
 \end{itemize}
 
-\textcolor{red}{TIM:  The original texts suggest there is a mnemonic that can be used to generate all of these keys.  I'd prefer to refer to this as a key delegation mechanism.  Can you explain the delegation mechanism that is used?  I am assuming you are probably generating a random seed, applying a PRG or a random oracle to expand it, and then feeding that randomness into the BLS key generation algorithm, but it might be useful to be more explicit here.  We should also probably mention this in step 1?}
+\textcolor{red}{TIM:  Last outstanding point:  the mnemonic issue.}
 
-The client node operator then generates $NUM\_VALIDATORS$ and verifies that the key pairs are correct. The EF retains the keys in cold storage in the event that validator keys must be used to exit validators from the program.
+The client node operator then generates $NUM\_VALIDATORS$ using the seed and key generation algorithm and verifies that the key pairs are correct (more precisely, that each private key maps sequentially to the batch of validator public key deposits made in their name). The EF retains the seed in cold storage in the event that validator keys must be used to exit validators from the program.
 
 
 \subsection{Step 3:  The Validators Run}
-At this point, the node operator is in charge of the management of the associated validators until withdrawal credentials are released. Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.  The cliend node operator has the discretion to run, add or change which consensus layer it uses with Hyperledger Besu. The node operator will determine when and how to onboard the right consensus layer. The team will begin running with Teku, but will evaluate additional consensus layers on an as needed basis.
+At this point, the deposits have been made and the keys have been transferred:  the node operator is in charge of the management of the associated validators until withdrawal credentials (the private keys) are released. 
+
+Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.  The cliend node operator has the discretion to run, add or change which consensus layer it uses with Hyperledger Besu. The node operator will determine when and how to onboard the right consensus layer. The team will begin running with Teku, but will evaluate additional consensus layers on an as needed basis.
 
 Performance of the client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
 Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to the splitter contract defined in section~\ref{sec:splitter}. In other words, the node operator will designate the $feeRecipient$ in the $ExecutionaPayload$ to be the splitter contract.
 
 \subsection{Step 4:  Withdrawal Credentials Released}
-Eventually the EF will release withdrawal credentials to patron organizations (and potentially maintainers) as it sees fit.  When a wave of validators is released, this ends the obligation of both the node operator and the withdrawal credential receipient to the EF for those validators. The withdrawal credential receipients are free to choose to continue to validate, to exit, to withdraw, to spend the entire credential buying Hart beer, and so forth.  The validators are required, however, to send any validator rewards earned to the ``splitter'' contract before exiting or withdrawing.
+Eventually the EF will release withdrawal credentials to patron organizations (and potentially maintainers) as it sees fit upon Hyperledger Besu meeting pre-defined milestones via the transfer of the underlying privkeys for the validator withdrawal credentials.  We again emphasize that the EF reserves full discretion over which organizations are eligible to receive withdrawal credentials. The addition of organizations which are eligible to receive withdrawal credentials has no impact on the total amount of validators included in the incentive program.
+
+When a wave of validators is released, this ends the obligation of both the node operator and the withdrawal credential receipient to the EF for those validators. The withdrawal credential receipients are free to choose to continue to validate, to exit, to withdraw, to spend the entire credential buying Hart beer, and so forth.  The validators are required, however, to send any validator rewards earned to the ``splitter'' contract before exiting or withdrawing.
 
 An exception is the HLF:  they must spend their withdrawal credentials on work that benefits Besu mainnet development as defined earlier.
 
-\textcolor{red}{TIM:  This wasn't in your most recent document, but it's the sentiment you've expressed throughout the process.  I'm assuming you want to restrict HLF spending to Besu mainnet work.}
-
 Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and Consensys), we leave it up to these entities to determine smooth processes for withdrawing credentials.
+
+These keys will be PGP encrypted and transferred in batches.
