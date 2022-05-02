@@ -55,6 +55,21 @@ We note that withdrawal credentials can be ``cold'':  that is, they are not need
 
 We emphasize that the signing key of the validator key set must be kept secure, as it cannot be changed during the operation of the vaildator (although the stake can be withdrawn and used to create a new validator).
 
+\paragraph{Key Derivation.}  The withdrawal and validator keys are generated using a key generation algorithms that the EF calls ``mnemonics.'' There are two such algorithms, one for validator keys and one for withdrawal keys. 
+
+\textbf{Validator Key Derivation:}
+\begin{itemize}
+ \item All validator active keys are derived from the key derivation algorithm defined in EIP 2333~\cite{EthBLSKeyGen} using the EIP 2334 ``signing key'' derivation path~\cite{EthBLSHierarchy} which is
+given to the node operator to generate the active keystores to do live validation for all validators in the program.
+\end{itemize}
+
+\textbf{Withdrawal Key Derivation:}
+\begin{itemize}
+\item All validator withdrawal credentials are derived from this mnemonic using the EIP 2334 "withdrawal key" derivation path~\cite{EthBLSHierarchy}.
+\item This seed is withheld by the EF. Upon meeting milestones in the program (described in much more detail in section~\ref{sec:structure}), sets of keys from this key generation protocol will be given to those in the program for full ownership.
+\item  As noted above, this means that two parties then have the keys (EF and recipient) which is not ideal.  The EF reserves the right to change the withdrawal process so that withdrawals are enabled using a``change of key operation.'' In the event that this happens, the EF will likely do a change of key to an eth1 address designated by the recipient rather than by sending raw keys. 
+\end{itemize}
+
 \paragraph{Transaction Fee Recipient Keys.}    When the validators construct blocks, they can send the transactions fees from the block (including gas fees) to a recipient that is not necessarily themselves.  The \emph{feeRecipient} is a $20$-byte string that designates an Eth1 address and is a part of the \emph{ExecutionPayload} of the Beacon Chain specification.  The value of this \emph{feeRecipient} is thus a \emph{transaction fee recipient key}.  
 
 The execution payload structure is defined in the execution engine specification~\cite{EthEng} as well as the Bellatrix update description~\cite{EthBella} which is the update implementing ``the merge.''  We note that the \emph{feeRecipient} is equivalent to the \emph{beneficiary} from the original Ethereum yellow paper~\cite{wood2014ethereum}.
