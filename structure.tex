@@ -26,7 +26,7 @@ We begin by defining some parameters that will be used in the following section.
 \hline
 NUM\_PERFORMANCE & 128 & \text{Number of validators monitored for performance} \\
 \hline
-NUM\_CANARIES & 16 & \text{Number of canary vaildators} \\
+NUM\_CANARIES & 16 & \text{Number of canary validators} \\
 \hline
 NUM\_VALIDATORS & NUM\_PERFORMANCE & \text{Total number of validators} \\
 &  + NUM\_CANARIES & \\
@@ -49,7 +49,7 @@ MAX\_PROBATION\_WINDOW & 32768 & \text{Maximum number of epochs that the} \\
 \]
 
 \subsection{Step 1:  The EF Makes Deposits}
-After Hyperledger Besu has formally agreed to join the CIP, and a node operator, responsible for running and monitoring validators, has been selected by the EF, the EF creates $NUM\_VALIDATORS$ $32$-ETH deposits.  For exactly how this process occurs, please see~\cite{EthVal}.  We note that Consensys has already been selected as the initial node operator.
+After Hyperledger Besu has formally agreed to join the CIP, and a node operator, responsible for running and monitoring validators, has been selected by the EF, the EF creates $NUM\_VALIDATORS$ $32$-ETH deposits.  For exactly how this process occurs, please see~\cite{EthVal}.  We note that ConsenSys has already been selected as the initial node operator.
 
 Note that the total ETH at stake in the client incentivization plan is equal to $NUM\_VALIDATORS * 32$. In consultation with the node operator, a formal start date for this program will be determined where teams will gain control of validators, sometime before ``The Merge'' occurs (and after March 1, 2022, which has already passed by the time of this writing).
 
@@ -75,7 +75,7 @@ Specifically, the client node operator must use Hyperledger Besu as an execution
 
 Performance of the client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
-Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to the splitter contract defined in section~\ref{sec:splitter}. In other words, the node operator will designate the $feeRecipient$ in the $ExecutionaPayload$ to be the splitter contract.
+Once the merge has occurred (and ``real'' transactions happen on the beacon chain), the node operator will send transaction fees to the splitter contract defined in section~\ref{sec:splitter}. In other words, the node operator will designate the $feeRecipient$ in the $ExecutionPayload$ to be the splitter contract.
 
 \subsection{Step 4:  Withdrawal Credentials Released}
 Eventually the EF will release withdrawal credentials to patron organizations (and potentially maintainers) as it sees fit upon Hyperledger Besu meeting pre-defined milestones via the transfer of the underlying privkeys for the validator withdrawal credentials.  We again emphasize that the EF reserves full discretion over which organizations are eligible to receive withdrawal credentials. The addition of organizations which are eligible to receive withdrawal credentials has no impact on the total amount of validators included in the incentive program.
@@ -84,6 +84,6 @@ When a wave of validators is released, this ends the obligation of both the node
 
 An exception is the HLF:  they must spend their withdrawal credentials on work that benefits Besu mainnet development as defined earlier.
 
-Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and Consensys), we leave it up to these entities to determine smooth processes for withdrawing credentials.
+Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and ConsenSys), we leave it up to these entities to determine smooth processes for withdrawing credentials.
 
 These keys will be PGP encrypted and transferred in batches.
