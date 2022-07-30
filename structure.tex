@@ -69,7 +69,7 @@ The client node operator then generates $NUM\_VALIDATORS$ using the seed and key
 \subsection{Step 3:  The Validators Run}
 At this point, the deposits have been made and the keys have been transferred:  the node operator is in charge of the management of the associated validators until withdrawal credentials (the private keys) are released. 
 
-Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.  The cliend node operator has the discretion to run, add or change which consensus layer it uses with Hyperledger Besu. The node operator will determine when and how to onboard the right consensus layer. The team will begin running with Teku, but will evaluate additional consensus layers on an as needed basis.
+Specifically, the client node operator must use Hyperledger Besu as an execution-engine and is responsible for choosing and maintaining a consensus-engine throughout the incentivization period.  The client node operator has the discretion to run, add or change which consensus layer it uses with Hyperledger Besu. The node operator will determine when and how to onboard the right consensus layer. The team will begin running with Teku, but will evaluate additional consensus layers on an as needed basis.  Please see section~\ref{sec:background} for more information on the separation of the execution layer (Eth1) and the consensus layer (Eth2).
 
 Performance of the client’s validators can be assessed simply by viewing chain metrics, but additional node performance metrics might be requested.
 
@@ -82,6 +82,6 @@ When a wave of validators is released, this ends the obligation of both the node
 
 An exception is the HLF:  they must spend their withdrawal credentials on work that benefits Besu mainnet development as defined earlier.
 
-Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and ConsenSys), we leave it up to these entities to determine smooth processes for withdrawing credentials.
+Note that if recipients choose to continue to validate after the withdrawal credentials are released, they are no longer required to allocate transaction fees/validator rewards to the splitter contract.  In the case that withdrawal credential recipients are not the node operator (i.e. the HLF and ConsenSys), we leave it up to these entities to determine smooth processes for withdrawing credentials.  In other words, the nodes can continue to run without any obligations to the program after the withdrawal credentials are released.
 
 These keys will be PGP encrypted and transferred in batches.

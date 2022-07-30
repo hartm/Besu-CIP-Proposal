@@ -1,12 +1,12 @@
 %!TEX root = ./main.tex
 
 \section{Program Metrics} \label{sec:metrics}
-In this section we discuss the milestones and success metrics of the program.
+In this section we discuss the milestones and success metrics of the program.  To ensure that we exactly align with the program, we have borrowed most of this text from the Ethereum Foundation.
 
 \subsection{Program Milestones}
 Due to the dynamic nature of the ever evolving Ethereum roadmap, simplicity is favored in the choice of milestones.  The milestones will determine the grant periods, which again are at the sole discretion of the EF.
 
-A wave of credentials are released when withdrawals from the beacon chain are enabled, with a minimum period of one year between the launch of the Besu CIP and the complete release of the first wave of credentials (in other words, the first grant period will be a year).
+A set of credentials are released when withdrawals from the beacon chain are enabled, with a minimum period of one year between the launch of the Besu CIP and the complete release of the first wave of credentials (in other words, the first grant period will be a year).
 
 If withdrawals from the beacon chain are enabled within or before the first year of the Besu CIP, the first wave of credentials will be released monthly, in equal tranches, from the first month after withdrawals are enabled, to the one year mark of the program. For example, if withdrawals are enabled 6 months after the start of the program, then 1/6th of the first tranche will be released on months 7, 8, 9, 10, 11 and 12 (note that we are indexing on month $1$ as the start month, not month $0$). Otherwise, the first wave of credentials will be released when withdrawals are enabled. Subsequent waves are released over time if Hyperledger Besu continues to meet expectations. Specifically, the milestones are as follows:
 
@@ -41,7 +41,7 @@ MIN\_BLOCK\_PERCENT & 95 & \text{Minimum acceptable percentage of} \\
 
 Hyperledger Besu clients run by the node operators must meet the following metrics:
 \begin{itemize}
-\item Validators on average do not drop below $MIN\_ACCEPTABLE\_BALANCE$ (over the time length of a probation window).
+\item Validators on average do not drop below $MIN\_ACCEPTABLE\_BALANCE$ (over the time length of a probation window (defined in section~\ref{sec:Probation}).
 \item Validators have at least $MIN\_ATTESTATION\_PERCENTAGE$ percentage of expected attestations included on chain over any $METRICS\_WINDOW$ epoch period.
 \item Validators have at least $MIN\_BLOCK\_PERCENTAGE$ percentage of expected blocks included on chain over any $METRICS\_WINDOW$ epoch period.
 \end{itemize}
@@ -52,7 +52,7 @@ Above all else, the EF expect client teams to actively work toward ensuring a ro
 
 In the context of this plan, validator top-ups (adding more Eth, up to 32 Eth, to a validator with less than 32 Eth) are against the rules and should generally be avoided. If in some scenario a top-up would benefit the health of the network, the EF and the Hyperledger Besu commnity can discuss and reformulate the metrics/milestones accordingly.
 
-\subsection{Probation}
+\subsection{Probation}~\label{sec:Probation}
 If the Hyperledger Besu nodes drop below the success metrics, the program's status moves into probation. During a probationary period, the Hyperledger Besu community and the node operators have $MAX\_PROBATION\_WINDOW$ epochs to get metrics back to successful standards, and during a probationary period no withdrawal credentials will be released. The amount of time spent in probation pushes back the release of any withdrawal credentials by at least that amount of time.
 
 If metrics remain in probationary status for more than $MAX\_PROBATION\_WINDOW$ epochs, the EF can at their discretion partially or fully remove Hyperledger Besu from the incentivization program and partially or fully exit the program’s validators.
@@ -67,7 +67,7 @@ If the slashable event is exceedingly large, negligent, or repeated, the EF can 
 Note: Performance and canary validators are both subject to the slashing rules.
 
 \subsection{Consensus Layer Dependencies}
-While the Hyperledger Besu community is fully responsible for ensuring that their operation is run in a performant and non-slashable way, we recognize that there is a limit to what execution layer teams can do to mitigate issues on the consensus layer (and vice-versa). Specifically, this means we expect Hyperledger Besu and the node operator to adopt best practices with regards to running their validators, but will not penalize them in the case of a widespread consensus-layer issue. Best practices when running validators include:
+While the Hyperledger Besu community is fully responsible for ensuring that their operation is run in way that ensures satisfactory performance and that no slashing occurs, we recognize that there is a limit to what execution layer teams can do to mitigate issues on the consensus layer (and vice-versa). Specifically, this means we expect Hyperledger Besu and the node operator to adopt best practices with regards to running their validators, but will not penalize them in the case of a widespread consensus-layer issue. Best practices when running validators include:
 \begin{itemize}
 \item Ensuring that Hyperleger Besu can interoperate with most/all major consensus clients, at least on canary validators.
 \item Ensuring that Hyperleger Besu’s failures are decorrelated from the rest of the network, both by relying on diverse consensus layer clients and hosting setups.

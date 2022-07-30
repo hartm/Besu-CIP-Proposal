@@ -4,16 +4,20 @@
 
 In this document, we present the Besu CIP proposal in our own words.  We first outline some core background material that is essential for understanding the proposal.  Then we delinineate the terms of the proposal.
 
-To summarize, the Ethereum Foundation is launching an execution layer client incentive program (ELCIP) of which Hyperledger Besu is one execution client. This program will provide execution-layer client teams with locked ETH in the form of live validators to be released according to certain milestones, including post-merge performance and progress towards enabling withdrawals from the beacon chain.
+To summarize, the Ethereum Foundation is launching an execution layer client incentive program (ELCIP) of which Hyperledger Besu is one execution client. This program will provide execution-layer client teams with locked ETH in the form of live validators to be released according to certain milestones, including post-merge performance and progress towards enabling withdrawals from the beacon chain.  This document explains how these ETH grants are distributed between maintainers of and contributors to Hyperledger Besu, as well as the Hyperledger Foundation, which is the open-source foundation under the Linux Foundation where Hyperledger Besu resides.
 
 The Ethereum Foundation (EF) has designed the program with the following guiding principles in mind:
 
 \begin{itemize}
 \item The Ethereum Foundation reserves the right to change, update or terminate the program at any point. The EF thus acts as a check and balance that Besu maintainers, their parent organizations, and the Hyperledger Foundation (HLF) continue to meet the requirements of the program.
 \item In summary, the program offers teams locked ETH in the form of live validators to be released according to certain milestones. Alongside the “principal” (i.e. locked Eth) portion of the program, teams’ validators will also accrue staking rewards and transaction fees.
-\item While fees and rewards should be shared across the entire set of Besu maintainers working on mainnet, access to the locked ETH is reserved for organizations who demonstrate longstanding support for Besu’s mainnet work and the Ethereum network generally.
+\item While fees and rewards should be shared across the entire set of Besu maintainers working on mainnet, access to the locked ETH is reserved for organizations who demonstrate longstanding support for Besu’s mainnet work and the Ethereum network generally.  In other words, there are two sets of funds:
+\begin{itemize}
+\item \emph{Patron Rewards}:  staked ETH that is given to organizations which have given longstanding support to Besu and Ethereum.
+\item \emph{Maintainer Rewards}:  transaction fees and staking rewards that are accrued in the process of validator operation that are distributed between the node operator\footnote{For those unfamiliar with the terminology, this and other terms are defined later in the document.}, the Hyperledger Foundation, and the Besu mainnet maintainers.
 \end{itemize}
-We explain the details behind these principles throughout the course of this document.
+\end{itemize}
+We explain the details behind these principles throughout the course of this document.  
 
 \section{Background}~\label{sec:background}
 We start by discussing some background material.  We note that this should be familiar to Ethereum experts, but those who are not familiar with Ethereum's change to proof of stake may want to consult the following material for reference.
@@ -25,7 +29,9 @@ We begin by providing some informal definitions of terms from the Ethereum ecosy
 
 \paragraph{Grant Period.}  The \emph{grant period} is the interval of time which passes between phases of the program.  At the beginning/end of each grant period, the HLF will report back to the EF as described later, and categorizations of maintainers and organizations will be reassesed.  After the starting period, which ends upon the activation of validator withdrawals on the Beacon Chain, initially this period will be set for six months, but the EF can determine this as they see fit, reserving the option to have totally arbitrary grant periods that change on the fly.  The EF emphasizes that they would prefer to stick to a schedule, however.  We note that the grant period has been referred to as the \emph{CIP vesting period} in previous documentation.  There are more precise details on the grant period later in this document.
 
-\paragraph{Validator.}  A validator is a node that decides consensus on the proof of stake Ethereum chain.  Very roughly, the validators take the role that miners have in proof of work blockchains.
+\paragraph{Validator.}  A validator is a node that decides consensus on the proof of stake Ethereum chain.  Very roughly, the validators take the role that miners have in proof of work blockchains.  Validators may also be referred to as Ethereum clients.
+
+\paragraph{Node Operator.}  The node operator refers to the organization that is responsible for running some validator or set of validators.
 
 \paragraph{Epochs.}  Rather than count the length of the chain in blocks, after the Bellatrix update~\cite{EthBella}, the length of the Ethereum chain will be counted in \emph{epochs}.  An \emph{epoch} is a bundle of up to 32 blocks that validators propose and attest to over a period lasting roughly $6.4$ minutes.
 
@@ -49,7 +55,7 @@ Currently there are two forms of withdrawal credentials supported:
 \item Eth1 addresses (in the form of 20-byte strings) denoted by \emph{eth1\_withdrawal\_address}.  As stated in~\cite{EthVal}, after the merge of the current Ethereum application layer into the Beacon Chain, withdrawals to \emph{eth1\_withdrawal\_address} will simply be increases to the account's ETH balance that do not trigger any EVM execution.  We note that Eth1 addresses are generated by hashing Eth1 public signing keys (secp256k1 curve-based~\cite{secp256k1}).
 \end{itemize}
 
-We note that withdrawal credentials can be ``cold'':  that is, they are not needed for frequent validator operations and only need to be used when moving staked ETH or staking rewards.  The program will start by using BLS credentials for withdrawal keys (denoted 0x00 credentials by the EF). We can update these to 0x01 credentials (i.e. Eth1 addresses), and may have to in order to enable partial withdrawals. That said, recipients of withdrawal keys will need to secure a 0x01 credential no matter what because even if you make a withdrawal with a BLS credential, you need to specify which address to withdraw to and those must be Eth1 addresses. In both cases, recipients will need the ability to use the keys in cold storage, as the 0x00 credential would be required to sign a withdrawal message, and the Eth1 private key is obviously required to move funds once withdrawn. 
+We note that withdrawal credentials can be ``cold'':  that is, they are not needed for frequent validator operations and only need to be used when moving staked ETH or staking rewards.  The program will start by using BLS credentials for withdrawal keys (denoted ``0x00 credentials'' by the EF). We can update these to ``0x01 credentials'' (i.e. Eth1 addresses), and may have to in order to enable partial withdrawals. That said, recipients of withdrawal keys will need to secure a 0x01 credential no matter what because even if you make a withdrawal with a BLS credential, you need to specify which address to withdraw to and those must be Eth1 addresses. In both cases, recipients will need the ability to use the keys in cold storage, as the 0x00 credential would be required to sign a withdrawal message, and the Eth1 private key is obviously required to move funds once withdrawn. 
 
 \paragraph{Validator Keys.}  The \emph{validator keys}~\cite{EthVal} are keys for the BLS signature scheme~\cite{AC:BonLynSha01} implemented with the BLS12-381 curve~\cite{BLS12-318}.  The validator keys are used to actively sign data throughout the operation of the validator and must be ``hot.'' These are the traditional signature keys that one associates with blockchain activity.
 
@@ -67,8 +73,8 @@ given to the node operator to generate the active keystores to do live validatio
 
 \textbf{Withdrawal Key Derivation:}
 \begin{itemize}
-\item All validator withdrawal credentials are derived from this mnemonic using the EIP 2334 "withdrawal key" derivation path~\cite{EthBLSHierarchy}.
-\item This seed is withheld by the EF. Upon meeting milestones in the program (described in much more detail in section~\ref{sec:structure}), sets of keys from this key generation protocol will be given to those in the program for full ownership.
+\item All validator withdrawal credentials are derived from this mnemonic\footnote{Formally, the cryptographic term for this would be a seed for the mnemonic data and a pseudorandom generator for the mnemonic algorithm.} using the EIP 2334 "withdrawal key" derivation path~\cite{EthBLSHierarchy}.
+\item This seed (the data used in the mnemonic generation) is withheld by the EF. Upon meeting milestones in the program (described in much more detail in section~\ref{sec:structure}), sets of keys from this key generation protocol will be given to those in the program for full ownership.
 \item  As noted above, this means that two parties then have the keys (EF and recipient) which is not ideal.  The EF reserves the right to change the withdrawal process so that withdrawals are enabled using a``change of key operation.'' In the event that this happens, the EF will likely do a change of key to an eth1 address designated by the recipient rather than by sending raw keys. 
 \end{itemize}
 
